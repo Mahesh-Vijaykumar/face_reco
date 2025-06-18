@@ -36,7 +36,7 @@ pip install -r requirements.txt
 ## Running the App
 
 ```bash
-streamlit run FD_MatchTargetFace_Video_Optimized.py
+streamlit run FD_MatchTargetFace_Video.py
 ```
 
 ---
