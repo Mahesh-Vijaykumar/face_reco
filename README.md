@@ -26,8 +26,14 @@ This project is a real-time face recognition app that uses **DeepFace** for face
 ##  Installation
 
 ```bash
-git clone https://github.com/your-username/face-recognition-streamlit.git
-cd face-recognition-streamlit
+git clone https://github.com/your-username/face-recognition-streamlit.git](https://github.com/Mahesh-Vijaykumar/face_reco.git
+
+cd face_reco
+
+python3 -m venv venv
+
+source venv/bin/activate
+
 pip install -r requirements.txt
 ```
 
@@ -77,7 +83,4 @@ streamlit run FD_MatchTargetFace_Video.py
 ---
 
 ##  License
-
-MIT License
-
-> Created with  using Streamlit + DeepFace
+created by Mahesh-Vijaykumar
