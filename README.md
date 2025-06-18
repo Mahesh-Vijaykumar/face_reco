@@ -1,3 +1,4 @@
+
 # 🎯 Face Recognition in Video with DeepFace and Streamlit
 
 This project is a real-time face recognition app that uses **DeepFace** for face embeddings and **OpenCV** for video processing. It allows you to:
@@ -81,3 +82,6 @@ streamlit run FD_MatchTargetFace_Video_Optimized.py
 MIT License
 
 > Created with ❤️ using Streamlit + DeepFace
+=======
+# face_reco
+

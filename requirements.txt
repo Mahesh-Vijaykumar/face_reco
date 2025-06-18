@@ -6,3 +6,5 @@ numpy
 Pillow
 mtcnn
 retina-face
+tensorflow==2.12.0
+keras==2.12.0
