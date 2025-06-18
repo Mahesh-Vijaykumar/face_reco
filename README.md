@@ -1,4 +1,4 @@
-# 🎯 Face Recognition in Video with DeepFace and Streamlit
+#  Face Recognition in Video with DeepFace and Streamlit
 
 This project is a real-time face recognition app that uses **DeepFace** for face embeddings and **OpenCV** for video processing. It allows you to:
 
@@ -10,20 +10,20 @@ This project is a real-time face recognition app that uses **DeepFace** for face
 
 ---
 
-## 📦 Features
+##  Features
 
-- ✅ Upload face image and video
-- 🧠 Uses DeepFace (Facenet or Dlib)
-- ⚡ Optimized for low-memory systems
+-  Upload face image and video
+-  Uses DeepFace (Facenet or Dlib)
+- Optimized for low-memory systems
   - Skips frames
   - Resizes frames
   - Optional: Limits max frame count
-- 📸 Displays matched frames with confidence
-- 📊 Lists all matched frame numbers
+-  Displays matched frames with confidence
+-  Lists all matched frame numbers
 
 ---
 
-## 📁 Installation
+##  Installation
 
 ```bash
 git clone https://github.com/your-username/face-recognition-streamlit.git
@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Running the App
+## Running the App
 
 ```bash
 streamlit run FD_MatchTargetFace_Video_Optimized.py
@@ -41,7 +41,7 @@ streamlit run FD_MatchTargetFace_Video_Optimized.py
 
 ---
 
-## 🧠 Model Backends Used
+##  Model Backends Used
 
 | Task              | Backend         |
 |-------------------|-----------------|
@@ -51,7 +51,7 @@ streamlit run FD_MatchTargetFace_Video_Optimized.py
 
 ---
 
-## 📝 How It Works
+##  How It Works
 
 1. Extracts 128D embedding from the uploaded face image
 2. Iterates through frames of the uploaded video
@@ -60,7 +60,7 @@ streamlit run FD_MatchTargetFace_Video_Optimized.py
 
 ---
 
-## 💡 Tips
+##  Tips
 
 - Works best with clear, frontal face images
 - Lower the threshold in code (`similarity > 0.6`) if too strict
@@ -68,7 +68,7 @@ streamlit run FD_MatchTargetFace_Video_Optimized.py
 
 ---
 
-## 📌 TODO
+##  TODO
 
 - [ ] Save matched frames
 - [ ] Export match logs to CSV
@@ -76,8 +76,8 @@ streamlit run FD_MatchTargetFace_Video_Optimized.py
 
 ---
 
-## 📃 License
+##  License
 
 MIT License
 
-> Created with ❤️ using Streamlit + DeepFace
+> Created with  using Streamlit + DeepFace
