@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 Face Recognition in Video (Flask, CPU-only)
 
 A modern Flask web app that matches a target face in an uploaded video. Runs fully on CPU with DeepFace for embeddings and OpenCV for video processing. Outputs all matched frames with bounding boxes and similarity scores.
@@ -59,9 +59,12 @@ Troubleshooting
 - If accuracy is low, try ArcFace + RetinaFace with a higher threshold (0.80+).
 
 # 🎯 Face Recognition in Video with DeepFace and Streamlit
-=======
+
 #  Face Recognition in Video with DeepFace and Streamlit
->>>>>>> 7b06e82dfd78fe0842a04e08e36a74a279466cb9
+ 7b06e82dfd78fe0842a04e08e36a74a279466cb9
+
+#  Face Recognition in Video with DeepFace and Streamlit
+ 7b06e82dfd78fe0842a04e08e36a74a279466cb9
 
 This project is a real-time face recognition app that uses **DeepFace** for face embeddings and **OpenCV** for video processing. It allows you to:
 
@@ -145,8 +148,8 @@ streamlit run FD_MatchTargetFace_Video.py
 
 ---
 
-<<<<<<< HEAD
-=======
+
 ##  License
 created by Mahesh-Vijaykumar
->>>>>>> 7b06e82dfd78fe0842a04e08e36a74a279466cb9
+
+

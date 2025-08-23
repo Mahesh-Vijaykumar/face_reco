@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 flask==3.0.3
 deepface==0.0.93
 opencv-python==4.11.0.86
@@ -9,7 +9,6 @@ gunicorn==23.0.0
 mtcnn==1.0.0
 retina-face==0.0.17
 onnxruntime==1.17.3
-=======
 streamlit
 deepface
 opencv-python
@@ -20,4 +19,4 @@ mtcnn
 retina-face
 tensorflow==2.12.0
 keras==2.12.0
->>>>>>> 7b06e82dfd78fe0842a04e08e36a74a279466cb9
+
