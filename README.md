@@ -89,39 +89,6 @@ This project is a real-time face recognition app that uses **DeepFace** for face
 
 ---
 
-##  Installation
-
-```bash
-git clone https://github.com/your-username/face-recognition-streamlit.git](https://github.com/Mahesh-Vijaykumar/face_reco.git
-
-cd face_reco
-
-python3 -m venv venv
-
-source venv/bin/activate
-
-pip install -r requirements.txt
-```
-
----
-
-## Running the App
-
-```bash
-streamlit run FD_MatchTargetFace_Video.py
-```
-
----
-
-##  Model Backends Used
-
-| Task              | Backend         |
-|-------------------|-----------------|
-| Face Detection    | MTCNN / RetinaFace / OpenCV / SSD |
-| Embedding         | Facenet (default), Dlib (optional) |
-| Matching          | Cosine similarity |
-
----
 
 ##  How It Works
 
@@ -137,14 +104,6 @@ streamlit run FD_MatchTargetFace_Video.py
 - Works best with clear, frontal face images
 - Lower the threshold in code (`similarity > 0.6`) if too strict
 - For large videos, limit frame count or increase skip rate
-
----
-
-##  TODO
-
-- [ ] Save matched frames
-- [ ] Export match logs to CSV
-- [ ] Auto-download model files if missing
 
 ---
 
