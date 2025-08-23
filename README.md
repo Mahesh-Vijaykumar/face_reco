@@ -58,13 +58,6 @@ Troubleshooting
 - If RetinaFace model downloads are slow, switch to MTCNN or OpenCV in the UI.
 - If accuracy is low, try ArcFace + RetinaFace with a higher threshold (0.80+).
 
-# 🎯 Face Recognition in Video with DeepFace and Streamlit
-
-#  Face Recognition in Video with DeepFace and Streamlit
- 7b06e82dfd78fe0842a04e08e36a74a279466cb9
-
-#  Face Recognition in Video with DeepFace and Streamlit
- 7b06e82dfd78fe0842a04e08e36a74a279466cb9
 
 This project is a real-time face recognition app that uses **DeepFace** for face embeddings and **OpenCV** for video processing. It allows you to:
 
