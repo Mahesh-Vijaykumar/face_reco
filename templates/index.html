@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Face Match in Video</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Face Recognition in Video</h1>
+        <p>Upload a target face and a video. CPU-only, accurate, and fast.</p>
+      </header>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flash">
+            {% for message in messages %}
+              <div class="flash-item">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <section class="card">
+        <form class="form" id="uploadForm" action="{{ url_for('process') }}" method="post" enctype="multipart/form-data">
+          <div class="form-row">
+            <label for="face_image">Target face image</label>
+            <input type="file" id="face_image" name="face_image" accept="image/png,image/jpeg" required />
+          </div>
+
+          <div class="form-row">
+            <label for="video_file">Video file</label>
+            <input type="file" id="video_file" name="video_file" accept="video/mp4,video/x-matroska,video/avi,video/quicktime" required />
+          </div>
+
+          <div class="grid grid-3">
+            <div class="form-row">
+              <label for="threshold">Similarity threshold</label>
+              <input type="range" id="threshold" name="threshold" min="0.50" max="0.95" step="0.01" value="0.75" oninput="document.getElementById('thv').innerText=this.value" />
+              <div class="hint">Current: <span id="thv">0.75</span></div>
+            </div>
+
+            <div class="form-row">
+              <label for="frame_skip">Process every Nth frame</label>
+              <input type="number" id="frame_skip" name="frame_skip" min="1" max="10" step="1" value="1" />
+              <div class="hint">Higher is faster, may miss frames</div>
+            </div>
+
+            <div class="form-row">
+              <label for="resize_width">Resize width (px)</label>
+              <input type="number" id="resize_width" name="resize_width" min="0" max="1280" step="10" value="640" />
+              <div class="hint">0 to disable resizing</div>
+            </div>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="form-row">
+              <label for="model">Model</label>
+              <select id="model" name="model">
+                <option>ArcFace</option>
+                <option>Facenet</option>
+                <option>VGG-Face</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="backend">Detector backend</label>
+              <select id="backend" name="backend">
+                <option>mtcnn</option>
+                <option>retinaface</option>
+                <option>ssd</option>
+                <option>opencv</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn" id="submitBtn">Find Matches</button>
+          </div>
+        </form>
+
+        <!-- Progress Section (Hidden by default) -->
+        <div id="progressSection" class="progress-section" style="display: none;">
+          <div class="progress-header">
+            <h3>Processing Video...</h3>
+            <p>This may take several minutes depending on video length and settings.</p>
+          </div>
+          
+          <div class="progress-steps">
+            <div class="step" id="step1">
+              <div class="step-icon">1</div>
+              <div class="step-text">Extracting face embedding...</div>
+            </div>
+            <div class="step" id="step2">
+              <div class="step-icon">2</div>
+              <div class="step-text">Processing video frames...</div>
+            </div>
+            <div class="step" id="step3">
+              <div class="step-icon">3</div>
+              <div class="step-text">Finding matches...</div>
+            </div>
+          </div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          
+          <div class="progress-status" id="progressStatus">
+            Initializing...
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div>Runs on CPU only. No data leaves your machine.</div>
+      </footer>
+    </div>
+
+    <script>
+      // Debug file selection
+      document.getElementById('face_image').addEventListener('change', function(e) {
+        console.log('Face image selected:', e.target.files[0]);
+      });
+      
+      document.getElementById('video_file').addEventListener('change', function(e) {
+        console.log('Video file selected:', e.target.files[0]);
+      });
+
+      document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        // Check if files are selected
+        const faceFile = document.getElementById('face_image').files[0];
+        const videoFile = document.getElementById('video_file').files[0];
+        
+        console.log('Form submission - Face file:', faceFile);
+        console.log('Form submission - Video file:', videoFile);
+        
+        if (!faceFile) {
+          alert('Please select a face image');
+          e.preventDefault();
+          return false;
+        }
+        
+        if (!videoFile) {
+          alert('Please select a video file');
+          e.preventDefault();
+          return false;
+        }
+        
+        // Show progress section
+        document.getElementById('progressSection').style.display = 'block';
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').textContent = 'Processing...';
+        
+        // Reset progress
+        document.getElementById('progressFill').style.width = '0%';
+        document.getElementById('progressStatus').textContent = 'Initializing...';
+        
+        // Remove active states from steps
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+        
+        // Start simulated progress
+        startProgressSimulation();
+        
+        // Let the form submit normally
+        return true;
+      });
+
+      function startProgressSimulation() {
+        let progress = 0;
+        let currentStep = 0;
+        const progressFill = document.getElementById('progressFill');
+        const progressStatus = document.getElementById('progressStatus');
+        
+        const progressInterval = setInterval(() => {
+          // Increment progress
+          progress += Math.random() * 8 + 2; // 2-10% per update
+          if (progress > 100) progress = 100;
+          
+          progressFill.style.width = progress + '%';
+          
+          // Update steps based on progress
+          if (progress > 15 && currentStep === 0) {
+            document.getElementById('step1').classList.add('active');
+            progressStatus.textContent = 'Face embedding extracted successfully';
+            currentStep = 1;
+          } else if (progress > 45 && currentStep === 1) {
+            document.getElementById('step2').classList.add('active');
+            progressStatus.textContent = 'Processing video frames...';
+            currentStep = 2;
+          } else if (progress > 75 && currentStep === 2) {
+            document.getElementById('step3').classList.add('active');
+            progressStatus.textContent = 'Finalizing results...';
+            currentStep = 3;
+          }
+          
+          // Stop when complete
+          if (progress >= 100) {
+            clearInterval(progressInterval);
+            progressStatus.textContent = 'Processing complete!';
+          }
+        }, 800 + Math.random() * 400); // 800-1200ms intervals
+      }
+    </script>
+  </body>
+  </html>
+
+

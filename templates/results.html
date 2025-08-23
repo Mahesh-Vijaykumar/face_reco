@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results - Face Matches</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>Results</h1>
+        <p>
+          {{ matches|length }} match(es) found · Model: <strong>{{ model }}</strong> · Backend: <strong>{{ backend }}</strong>
+        </p>
+      </header>
+
+      <section class="card">
+        <div class="meta">
+          {% if meta.error %}
+            <div class="flash">
+              <div class="flash-item">{{ meta.error }}</div>
+            </div>
+          {% else %}
+            <div>FPS: {{ '%.2f'|format(meta.fps) }} · Total frames: {{ meta.total_frames }} · Processed: {{ meta.processed_frames }}</div>
+            <div>Threshold: {{ threshold }} · Frame skip: {{ frame_skip }} · Resize width: {{ resize_width }}</div>
+          {% endif %}
+        </div>
+
+        {% if matches %}
+          <div class="grid grid-3 match-grid">
+            {% for m in matches %}
+              <div class="match-item">
+                {% if m.url %}
+                  <img src="{{ m.url }}" alt="match frame" />
+                {% endif %}
+                <div class="match-caption">
+                  <div>Frame {{ m.frame }} · {{ '%.2f'|format(m.time_seconds) }}s</div>
+                  <div>Similarity: {{ '%.3f'|format(m.similarity) }}</div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty">No matches found in the video.</div>
+        {% endif %}
+
+        <div class="actions">
+          <a class="btn" href="{{ url_for('index') }}">Run another search</a>
+        </div>
+      </section>
+    </div>
+  </body>
+  </html>
+
+
