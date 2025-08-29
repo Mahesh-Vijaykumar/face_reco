@@ -8,7 +8,7 @@ Features
 - CPU-only execution (ArcFace + RetinaFace by default)
 - Adjustable similarity threshold, frame skip, and resize width
 - Shows all matched frames with annotated bounding boxes and similarity
-- Clean, responsive UI (no Streamlit)
+- Clean, responsive UI
 
 Requirements
 - Python 3.10+
